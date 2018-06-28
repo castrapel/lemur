@@ -33,7 +33,7 @@ before_script:
   - pip install --upgrade setuptools
 
 install:
-  - pip install coveralls
+  - pip install codecov
   - pip install bandit
 
 script:
@@ -41,7 +41,7 @@ script:
   - bandit -r . -ll -ii -x lemur/tests/,docs
 
 after_success:
-  - coveralls
+  - codecov
 
 notifications:
   email:
