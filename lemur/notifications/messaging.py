@@ -52,7 +52,7 @@ def get_certificates(exclude=None):
 
     certs = []
 
-    for c in windowed_query(q, Certificate.id, 100):
+    for c in windowed_query(q, Certificate.id, 10000):
         if needs_notification(c):
             certs.append(c)
 
@@ -153,11 +153,13 @@ def send_expiration_notifications(exclude):
             if notification_recipient:
                 notification_recipient = notification_recipient.split(",")
                 # removing owner and security_email from notification_recipient
-                notification_recipient = [i for i in notification_recipient if i not in security_email and i != owner]
+                notification_recipient = [
+                    i
+                    for i in notification_recipient
+                    if i not in security_email and i != owner
+                ]
 
-            if (
-                notification_recipient
-            ):
+            if notification_recipient:
                 if send_notification(
                     "expiration",
                     notification_data,
